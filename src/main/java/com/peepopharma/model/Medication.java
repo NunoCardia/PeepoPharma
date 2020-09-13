@@ -48,7 +48,7 @@ public class Medication implements Serializable {
 
   @NotBlank(message = "Medication number cannot be null or empty")
   @Pattern(regexp = "[A-Z0-9-_]+")
-  @Column(name = "MEDICATION_NUMBER", nullable = false)
+  @Column(name = "MEDICATION_NUMBER", nullable = false, unique = true)
   private String medicationNumber;
 
   @NotBlank(message = "Medication status cannot be null or empty")

@@ -1,5 +1,6 @@
 package com.peepopharma.model;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,11 +14,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity
 @Table(name = "PP_SALE", indexes = {
@@ -33,15 +37,6 @@ public class Sale {
   @Column(name = "SALE_ID", unique = true, updatable = false, nullable = false, length = 10)
   private String id;
 
-  @NotBlank(message = "Quantity cannot be null or empty")
-  @Column(name = "QUANTITY", nullable = false)
-  private Integer quantity;
-
-  @NotBlank(message = "Price cannot be null or empty")
-  @Pattern(regexp = "[0-9]{1,3}([,][0-9]{2})?[€]")
-  @Column(name = "PRICE", nullable = false, precision = 5, scale = 2)
-  private Float price;
-
   @OneToOne(targetEntity = User.class, fetch = FetchType.LAZY)
   @JoinColumn(name = "CLIENT", referencedColumnName = "ID", nullable = false)
   private User client;
@@ -53,5 +48,18 @@ public class Sale {
   @ManyToMany(targetEntity = Medication.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "MEDICATION_ID", referencedColumnName = "ID", nullable = false)
   private List<Medication> medications;
+
+  @CreatedDate
+  @Column(name = "CREATED_DATE", nullable = false)
+  private LocalDateTime createdDate;
+
+  @LastModifiedDate
+  @Column(name = "LAST_MODIFIED_DATE", nullable = false)
+  private LocalDateTime lastModifiedDate;
+
+  @Version
+  @Column(name = "VERSIONED_LOCK", columnDefinition = "bigint DEFAULT 0", nullable = false)
+  private int version;
+
 
 }

@@ -1,6 +1,7 @@
 package com.peepopharma.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,10 +15,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity
 @Table(name = "PP_STOCK_PURCHASES", indexes = {
@@ -39,15 +43,6 @@ public class StockPurchase implements Serializable {
   @Column(name = "COMPANY_NAME", nullable = false)
   private String companyName;
 
-  @NotBlank(message = "Price cannot be null or empty")
-  @Pattern(regexp = "[0-9]{1,3}([,][0-9]{2})?[€]")
-  @Column(name = "PRICE", nullable = false, precision = 5, scale = 2)
-  private Float price;
-
-  @NotBlank(message = "Quantity cannot be null or empty")
-  @Column(name = "QUANTITY", nullable = false)
-  private Integer quantity;
-
   @OneToMany(
       targetEntity = Medication.class,
       mappedBy = "stockPurchase",
@@ -59,5 +54,18 @@ public class StockPurchase implements Serializable {
   @OneToOne(targetEntity = User.class, fetch = FetchType.LAZY)
   @JoinColumn(name = "ADMIN", referencedColumnName = "ID", nullable = false)
   private User admin;
+
+  @CreatedDate
+  @Column(name = "CREATED_DATE", nullable = false)
+  private LocalDateTime createdDate;
+
+  @LastModifiedDate
+  @Column(name = "LAST_MODIFIED_DATE", nullable = false)
+  private LocalDateTime lastModifiedDate;
+
+  @Version
+  @Column(name = "VERSIONED_LOCK", columnDefinition = "bigint DEFAULT 0", nullable = false)
+  private int version;
+
 
 }

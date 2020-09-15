@@ -1,7 +1,6 @@
 package com.peepopharma.controller;
 
-import com.peepopharma.dto.User;
-import com.peepopharma.dto.UserUpdate;
+import com.peepopharma.dto.Sale;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -13,32 +12,30 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Validated
-@Api(value = "User", tags = "the User API")
-public interface UserApi {
-
-
-  @ApiOperation(value = "Creates an User", nickname = "createUser",
-      notes = "This operation creates an User entity", response = User.class)
+@Api(value = "Sale", tags = "the Sale API")
+public interface SaleManagementApi {
+  @ApiOperation(value = "Creates a Sale", nickname = "createSale",
+      notes = "This operation creates a Sale entity", response = Sale.class)
   @ApiResponses(value = {
-      @ApiResponse(code = 201, message = "Created", response = User.class),
+      @ApiResponse(code = 201, message = "Created", response = Sale.class),
       @ApiResponse(code = 400, message = "Bad Request", response = Error.class),
       @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
       @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)
   })
-  @PostMapping(value = "/user", produces = {"application/json"}, consumes = {"application/json"})
-  ResponseEntity<User> createUser(
-      @ApiParam(value = "The User to be created", required = true) @Valid @RequestBody
-          User userDto);
+  @PostMapping(value = "/sale", produces = {"application/json"}, consumes = {
+      "application/json"})
+  ResponseEntity<Sale> createSale(
+      @ApiParam(value = "The Sale to be created", required = true) @Valid @RequestBody
+          Sale SaleDto);
 
-  @ApiOperation(value = "Deletes an User", nickname = "deleteUser",
-      notes = "This operation deletes an User entity")
+  @ApiOperation(value = "Deletes a Sale", nickname = "deleteSale",
+      notes = "This operation deletes a Sale entity")
   @ApiResponses(value = {
       @ApiResponse(code = 204, message = "Deleted"),
       @ApiResponse(code = 400, message = "Bad Request", response = Error.class),
@@ -47,57 +44,39 @@ public interface UserApi {
       @ApiResponse(code = 404, message = "Not Found", response = Error.class),
       @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)
   })
-  @DeleteMapping(value = "/user/{id}", produces = {"application/json"})
-  ResponseEntity<Void> deleteUser(
-      @ApiParam(value = "The identifier of the User", required = true) @PathVariable("id") String id);
+  @DeleteMapping(value = "/sale/{id}", produces = {"application/json"})
+  ResponseEntity<Void> deleteSale(
+      @ApiParam(value = "The identifier of the Sale", required = true) @PathVariable("id") String id);
 
-  @ApiOperation(value = "List or find User objects", nickname = "listUser",
-      notes = "This operation lists or finds User entities", response = User.class,
+  @ApiOperation(value = "List or find Sale objects", nickname = "listSale",
+      notes = "This operation lists or finds Sale entities", response = Sale.class,
       responseContainer = "List")
   @ApiResponses(value = {
-      @ApiResponse(code = 200, message = "Success", response = User.class, responseContainer = "List"),
+      @ApiResponse(code = 200, message = "Success", response = Sale.class, responseContainer = "List"),
       @ApiResponse(code = 400, message = "Bad Request", response = Error.class),
       @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
       @ApiResponse(code = 403, message = "Forbidden", response = Error.class),
       @ApiResponse(code = 404, message = "Not Found", response = Error.class),
       @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)
   })
-  @GetMapping(value = "/user", produces = {"application/json"})
-  ResponseEntity<List<User>> listUser(
+  @GetMapping(value = "/sale", produces = {"application/json"})
+  ResponseEntity<List<Sale>> listSale(
       @ApiParam(value = "Comma-separated properties to be provided in response") @Valid @RequestParam(value = "fields", required = false) String fields,
       @ApiParam(value = "Requested index for start of resources to be provided in response") @Valid @RequestParam(value = "offset", required = false) Integer offset,
       @ApiParam(value = "Requested number of resources to be provided in response") @Valid @RequestParam(value = "limit", required = false) Integer limit);
 
-  @ApiOperation(value = "Updates partially an User", nickname = "patchUser",
-      notes = "This operation updates partially an User entity", response = User.class)
+  @ApiOperation(value = "Retrieves a Sale by ID", nickname = "retrieveSale",
+      notes = "This operation retrieves a Sale entity. Attribute selection is enabled for all first level attributes", response = Sale.class)
   @ApiResponses(value = {
-      @ApiResponse(code = 200, message = "Updated", response = User.class),
+      @ApiResponse(code = 200, message = "Success", response = Sale.class),
       @ApiResponse(code = 400, message = "Bad Request", response = Error.class),
       @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
       @ApiResponse(code = 403, message = "Forbidden", response = Error.class),
       @ApiResponse(code = 404, message = "Not Found", response = Error.class),
       @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)
   })
-  @PatchMapping(value = "/user/{id}", consumes = {"application/json"}, produces = {
-      "application/json"})
-  ResponseEntity<User> patchUser(
-      @ApiParam(value = "Identifier of the User", required = true) @PathVariable("id") String id,
-      @ApiParam(value = "The User to be updated", required = true) @Valid @RequestBody UserUpdate user);
-
-
-  @ApiOperation(value = "Retrieves an User by ID", nickname = "retrieveUser",
-      notes = "This operation retrieves an User entity. Attribute selection is enabled for all first level attributes", response = User.class)
-  @ApiResponses(value = {
-      @ApiResponse(code = 200, message = "Success", response = User.class),
-      @ApiResponse(code = 400, message = "Bad Request", response = Error.class),
-      @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
-      @ApiResponse(code = 403, message = "Forbidden", response = Error.class),
-      @ApiResponse(code = 404, message = "Not Found", response = Error.class),
-      @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)
-  })
-  @GetMapping(value = "/user/{id}", produces = {"application/json"})
-  ResponseEntity<User> listUser(
-      @ApiParam(value = "Identifier of the User", required = true) @PathVariable("id") String id,
+  @GetMapping(value = "/sale/{id}", produces = {"application/json"})
+  ResponseEntity<Sale> listSale(
+      @ApiParam(value = "Identifier of the Sale", required = true) @PathVariable("id") String id,
       @ApiParam(value = "Comma-separated properties to provide in response") @Valid @RequestParam(value = "fields", required = false) String fields);
-
 }

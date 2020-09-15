@@ -1,7 +1,6 @@
 package com.peepopharma.controller;
 
 import com.peepopharma.dto.Medication;
-import com.peepopharma.dto.MedicationUpdate;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -21,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Validated
 @Api(value = "Medication", tags = "the Medication API")
-public interface MedicationApi {
+public interface MedicationManagementApi {
 
   @ApiOperation(value = "Creates a Medication", nickname = "createMedication",
       notes = "This operation creates a Medication entity", response = Medication.class)
@@ -82,7 +81,7 @@ public interface MedicationApi {
       "application/json"})
   ResponseEntity<Medication> patchMedication(
       @ApiParam(value = "Identifier of the Medication", required = true) @PathVariable("id") String id,
-      @ApiParam(value = "The Medication to be updated", required = true) @Valid @RequestBody MedicationUpdate Medication);
+      @ApiParam(value = "The Medication to be updated", required = true) @Valid @RequestBody Medication Medication);
 
 
   @ApiOperation(value = "Retrieves a Medication by ID", nickname = "retrieveMedication",

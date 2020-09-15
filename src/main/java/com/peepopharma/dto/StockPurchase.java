@@ -8,14 +8,13 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @JsonInclude(Include.NON_EMPTY)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class StockPurchase implements Serializable {
-
-  @JsonProperty("id")
-  private String id;
+public class StockPurchase extends dtoBaseModel implements Serializable {
 
   @JsonProperty("companyName")
   private String companyName;

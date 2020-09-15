@@ -21,7 +21,7 @@ public enum Role {
         return action;
       }
     }
-    throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    return null;
   }
 
   @Override

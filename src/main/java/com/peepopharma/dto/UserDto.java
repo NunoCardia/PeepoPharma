@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
-import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -13,22 +12,24 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(Include.NON_EMPTY)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Prescription extends dtoBaseModel implements Serializable {
+public class UserDto extends BaseModel implements Serializable {
 
-  @JsonProperty("prescriptionNumber")
-  private String prescriptionNumber;
+  @JsonProperty("email")
+  private String email;
 
-  @JsonProperty("medications")
-  private List<Medication> medications;
+  @JsonProperty("address")
+  private String address;
 
-  @JsonProperty("quantity")
-  private Integer quantity;
+  @JsonProperty("citizenCard")
+  private String citizenCard;
 
-  @JsonProperty("client")
-  private String clientName;
+  @JsonProperty("VAT")
+  private String vat;
 
-  @JsonProperty("doctor")
-  private String doctorName;
+  @JsonProperty("phoneNumber")
+  private String phoneNumber;
 
+  @JsonProperty("role")
+  private String role;
 
 }

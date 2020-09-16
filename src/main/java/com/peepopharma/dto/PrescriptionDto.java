@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,19 +13,22 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(Include.NON_EMPTY)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class StockPurchase extends dtoBaseModel implements Serializable {
+public class PrescriptionDto extends BaseModel implements Serializable {
 
-  @JsonProperty("companyName")
-  private String companyName;
+  @JsonProperty("prescriptionNumber")
+  private String prescriptionNumber;
 
   @JsonProperty("medications")
-  private List<Medication> medications;
+  private List<MedicationDto> medicationDtos;
 
-  @JsonProperty("adminName")
-  private String adminName;
+  @JsonProperty("quantity")
+  private Integer quantity;
 
-  @JsonProperty("purchaseTime")
-  private LocalDateTime purchaseTime;
+  @JsonProperty("client")
+  private String clientName;
+
+  @JsonProperty("doctor")
+  private String doctorName;
 
 
 }

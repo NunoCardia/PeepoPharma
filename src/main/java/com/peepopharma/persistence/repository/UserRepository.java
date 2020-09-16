@@ -1,6 +1,6 @@
-package com.peepopharma.repository;
+package com.peepopharma.persistence.repository;
 
-import com.peepopharma.model.User;
+import com.peepopharma.persistence.model.User;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 

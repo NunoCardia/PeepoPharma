@@ -1,6 +1,6 @@
 package com.peepopharma.controller;
 
-import com.peepopharma.dto.Prescription;
+import com.peepopharma.dto.PrescriptionDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -22,18 +22,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface PrescriptionManagementApi {
 
   @ApiOperation(value = "Creates a Prescription", nickname = "createPrescription",
-      notes = "This operation creates a Prescription entity", response = Prescription.class)
+      notes = "This operation creates a Prescription entity", response = PrescriptionDto.class)
   @ApiResponses(value = {
-      @ApiResponse(code = 201, message = "Created", response = Prescription.class),
+      @ApiResponse(code = 201, message = "Created", response = PrescriptionDto.class),
       @ApiResponse(code = 400, message = "Bad Request", response = Error.class),
       @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
       @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)
   })
   @PostMapping(value = "/prescription", produces = {"application/json"}, consumes = {
       "application/json"})
-  ResponseEntity<Prescription> createPrescription(
+  ResponseEntity<PrescriptionDto> createPrescription(
       @ApiParam(value = "The Prescription to be created", required = true) @Valid @RequestBody
-          Prescription PrescriptionDto);
+          PrescriptionDto PrescriptionDto);
 
   @ApiOperation(value = "Deletes a Prescription", nickname = "deletePrescription",
       notes = "This operation deletes a Prescription entity")
@@ -50,10 +50,10 @@ public interface PrescriptionManagementApi {
       @ApiParam(value = "The identifier of the Prescription", required = true) @PathVariable("id") String id);
 
   @ApiOperation(value = "List or find Prescription objects", nickname = "listPrescription",
-      notes = "This operation lists or finds Prescription entities", response = Prescription.class,
+      notes = "This operation lists or finds Prescription entities", response = PrescriptionDto.class,
       responseContainer = "List")
   @ApiResponses(value = {
-      @ApiResponse(code = 200, message = "Success", response = Prescription.class, responseContainer = "List"),
+      @ApiResponse(code = 200, message = "Success", response = PrescriptionDto.class, responseContainer = "List"),
       @ApiResponse(code = 400, message = "Bad Request", response = Error.class),
       @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
       @ApiResponse(code = 403, message = "Forbidden", response = Error.class),
@@ -61,15 +61,15 @@ public interface PrescriptionManagementApi {
       @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)
   })
   @GetMapping(value = "/prescription", produces = {"application/json"})
-  ResponseEntity<List<Prescription>> listPrescription(
+  ResponseEntity<List<PrescriptionDto>> listPrescription(
       @ApiParam(value = "Comma-separated properties to be provided in response") @Valid @RequestParam(value = "fields", required = false) String fields,
       @ApiParam(value = "Requested index for start of resources to be provided in response") @Valid @RequestParam(value = "offset", required = false) Integer offset,
       @ApiParam(value = "Requested number of resources to be provided in response") @Valid @RequestParam(value = "limit", required = false) Integer limit);
 
   @ApiOperation(value = "Retrieves a Prescription by ID", nickname = "retrievePrescription",
-      notes = "This operation retrieves a Prescription entity. Attribute selection is enabled for all first level attributes", response = Prescription.class)
+      notes = "This operation retrieves a Prescription entity. Attribute selection is enabled for all first level attributes", response = PrescriptionDto.class)
   @ApiResponses(value = {
-      @ApiResponse(code = 200, message = "Success", response = Prescription.class),
+      @ApiResponse(code = 200, message = "Success", response = PrescriptionDto.class),
       @ApiResponse(code = 400, message = "Bad Request", response = Error.class),
       @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
       @ApiResponse(code = 403, message = "Forbidden", response = Error.class),
@@ -77,7 +77,7 @@ public interface PrescriptionManagementApi {
       @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)
   })
   @GetMapping(value = "/prescription/{id}", produces = {"application/json"})
-  ResponseEntity<Prescription> listPrescription(
+  ResponseEntity<PrescriptionDto> listPrescription(
       @ApiParam(value = "Identifier of the Prescription", required = true) @PathVariable("id") String id,
       @ApiParam(value = "Comma-separated properties to provide in response") @Valid @RequestParam(value = "fields", required = false) String fields);
 }

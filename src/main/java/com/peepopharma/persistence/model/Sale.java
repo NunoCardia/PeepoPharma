@@ -1,4 +1,4 @@
-package com.peepopharma.model;
+package com.peepopharma.persistence.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,8 +16,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;

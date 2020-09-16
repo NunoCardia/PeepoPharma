@@ -1,6 +1,6 @@
 package com.peepopharma.controller;
 
-import com.peepopharma.dto.Medication;
+import com.peepopharma.dto.MedicationDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -23,18 +23,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface MedicationManagementApi {
 
   @ApiOperation(value = "Creates a Medication", nickname = "createMedication",
-      notes = "This operation creates a Medication entity", response = Medication.class)
+      notes = "This operation creates a Medication entity", response = MedicationDto.class)
   @ApiResponses(value = {
-      @ApiResponse(code = 201, message = "Created", response = Medication.class),
+      @ApiResponse(code = 201, message = "Created", response = MedicationDto.class),
       @ApiResponse(code = 400, message = "Bad Request", response = Error.class),
       @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
       @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)
   })
   @PostMapping(value = "/medication", produces = {"application/json"}, consumes = {
       "application/json"})
-  ResponseEntity<Medication> createMedication(
+  ResponseEntity<MedicationDto> createMedication(
       @ApiParam(value = "The Medication to be created", required = true) @Valid @RequestBody
-          Medication medicationDto);
+          MedicationDto medicationDto);
 
   @ApiOperation(value = "Deletes a Medication", nickname = "deleteMedication",
       notes = "This operation deletes a Medication entity")
@@ -51,10 +51,10 @@ public interface MedicationManagementApi {
       @ApiParam(value = "The identifier of the Medication", required = true) @PathVariable("id") String id);
 
   @ApiOperation(value = "List or find Medication objects", nickname = "listMedication",
-      notes = "This operation lists or finds Medication entities", response = Medication.class,
+      notes = "This operation lists or finds Medication entities", response = MedicationDto.class,
       responseContainer = "List")
   @ApiResponses(value = {
-      @ApiResponse(code = 200, message = "Success", response = Medication.class, responseContainer = "List"),
+      @ApiResponse(code = 200, message = "Success", response = MedicationDto.class, responseContainer = "List"),
       @ApiResponse(code = 400, message = "Bad Request", response = Error.class),
       @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
       @ApiResponse(code = 403, message = "Forbidden", response = Error.class),
@@ -62,15 +62,15 @@ public interface MedicationManagementApi {
       @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)
   })
   @GetMapping(value = "/medication", produces = {"application/json"})
-  ResponseEntity<List<Medication>> listMedication(
+  ResponseEntity<List<MedicationDto>> listMedication(
       @ApiParam(value = "Comma-separated properties to be provided in response") @Valid @RequestParam(value = "fields", required = false) String fields,
       @ApiParam(value = "Requested index for start of resources to be provided in response") @Valid @RequestParam(value = "offset", required = false) Integer offset,
       @ApiParam(value = "Requested number of resources to be provided in response") @Valid @RequestParam(value = "limit", required = false) Integer limit);
 
   @ApiOperation(value = "Updates partially a Medication", nickname = "patchMedication",
-      notes = "This operation updates partially a Medication entity", response = Medication.class)
+      notes = "This operation updates partially a Medication entity", response = MedicationDto.class)
   @ApiResponses(value = {
-      @ApiResponse(code = 200, message = "Updated", response = Medication.class),
+      @ApiResponse(code = 200, message = "Updated", response = MedicationDto.class),
       @ApiResponse(code = 400, message = "Bad Request", response = Error.class),
       @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
       @ApiResponse(code = 403, message = "Forbidden", response = Error.class),
@@ -79,15 +79,15 @@ public interface MedicationManagementApi {
   })
   @PatchMapping(value = "/medication/{id}", consumes = {"application/json"}, produces = {
       "application/json"})
-  ResponseEntity<Medication> patchMedication(
+  ResponseEntity<MedicationDto> patchMedication(
       @ApiParam(value = "Identifier of the Medication", required = true) @PathVariable("id") String id,
-      @ApiParam(value = "The Medication to be updated", required = true) @Valid @RequestBody Medication Medication);
+      @ApiParam(value = "The Medication to be updated", required = true) @Valid @RequestBody MedicationDto MedicationDto);
 
 
   @ApiOperation(value = "Retrieves a Medication by ID", nickname = "retrieveMedication",
-      notes = "This operation retrieves a Medication entity. Attribute selection is enabled for all first level attributes", response = Medication.class)
+      notes = "This operation retrieves a Medication entity. Attribute selection is enabled for all first level attributes", response = MedicationDto.class)
   @ApiResponses(value = {
-      @ApiResponse(code = 200, message = "Success", response = Medication.class),
+      @ApiResponse(code = 200, message = "Success", response = MedicationDto.class),
       @ApiResponse(code = 400, message = "Bad Request", response = Error.class),
       @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
       @ApiResponse(code = 403, message = "Forbidden", response = Error.class),
@@ -95,7 +95,7 @@ public interface MedicationManagementApi {
       @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)
   })
   @GetMapping(value = "/medication/{id}", produces = {"application/json"})
-  ResponseEntity<Medication> listMedication(
+  ResponseEntity<MedicationDto> listMedication(
       @ApiParam(value = "Identifier of the Medication", required = true) @PathVariable("id") String id,
       @ApiParam(value = "Comma-separated properties to provide in response") @Valid @RequestParam(value = "fields", required = false) String fields);
 

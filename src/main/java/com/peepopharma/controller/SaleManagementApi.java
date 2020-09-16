@@ -1,6 +1,6 @@
 package com.peepopharma.controller;
 
-import com.peepopharma.dto.Sale;
+import com.peepopharma.dto.SaleDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -21,18 +21,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Api(value = "Sale", tags = "the Sale API")
 public interface SaleManagementApi {
   @ApiOperation(value = "Creates a Sale", nickname = "createSale",
-      notes = "This operation creates a Sale entity", response = Sale.class)
+      notes = "This operation creates a Sale entity", response = SaleDto.class)
   @ApiResponses(value = {
-      @ApiResponse(code = 201, message = "Created", response = Sale.class),
+      @ApiResponse(code = 201, message = "Created", response = SaleDto.class),
       @ApiResponse(code = 400, message = "Bad Request", response = Error.class),
       @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
       @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)
   })
   @PostMapping(value = "/sale", produces = {"application/json"}, consumes = {
       "application/json"})
-  ResponseEntity<Sale> createSale(
+  ResponseEntity<SaleDto> createSale(
       @ApiParam(value = "The Sale to be created", required = true) @Valid @RequestBody
-          Sale SaleDto);
+          SaleDto SaleDto);
 
   @ApiOperation(value = "Deletes a Sale", nickname = "deleteSale",
       notes = "This operation deletes a Sale entity")
@@ -49,10 +49,10 @@ public interface SaleManagementApi {
       @ApiParam(value = "The identifier of the Sale", required = true) @PathVariable("id") String id);
 
   @ApiOperation(value = "List or find Sale objects", nickname = "listSale",
-      notes = "This operation lists or finds Sale entities", response = Sale.class,
+      notes = "This operation lists or finds Sale entities", response = SaleDto.class,
       responseContainer = "List")
   @ApiResponses(value = {
-      @ApiResponse(code = 200, message = "Success", response = Sale.class, responseContainer = "List"),
+      @ApiResponse(code = 200, message = "Success", response = SaleDto.class, responseContainer = "List"),
       @ApiResponse(code = 400, message = "Bad Request", response = Error.class),
       @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
       @ApiResponse(code = 403, message = "Forbidden", response = Error.class),
@@ -60,15 +60,15 @@ public interface SaleManagementApi {
       @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)
   })
   @GetMapping(value = "/sale", produces = {"application/json"})
-  ResponseEntity<List<Sale>> listSale(
+  ResponseEntity<List<SaleDto>> listSale(
       @ApiParam(value = "Comma-separated properties to be provided in response") @Valid @RequestParam(value = "fields", required = false) String fields,
       @ApiParam(value = "Requested index for start of resources to be provided in response") @Valid @RequestParam(value = "offset", required = false) Integer offset,
       @ApiParam(value = "Requested number of resources to be provided in response") @Valid @RequestParam(value = "limit", required = false) Integer limit);
 
   @ApiOperation(value = "Retrieves a Sale by ID", nickname = "retrieveSale",
-      notes = "This operation retrieves a Sale entity. Attribute selection is enabled for all first level attributes", response = Sale.class)
+      notes = "This operation retrieves a Sale entity. Attribute selection is enabled for all first level attributes", response = SaleDto.class)
   @ApiResponses(value = {
-      @ApiResponse(code = 200, message = "Success", response = Sale.class),
+      @ApiResponse(code = 200, message = "Success", response = SaleDto.class),
       @ApiResponse(code = 400, message = "Bad Request", response = Error.class),
       @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
       @ApiResponse(code = 403, message = "Forbidden", response = Error.class),
@@ -76,7 +76,7 @@ public interface SaleManagementApi {
       @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)
   })
   @GetMapping(value = "/sale/{id}", produces = {"application/json"})
-  ResponseEntity<Sale> listSale(
+  ResponseEntity<SaleDto> listSale(
       @ApiParam(value = "Identifier of the Sale", required = true) @PathVariable("id") String id,
       @ApiParam(value = "Comma-separated properties to provide in response") @Valid @RequestParam(value = "fields", required = false) String fields);
 }

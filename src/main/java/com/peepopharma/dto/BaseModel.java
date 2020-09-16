@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 @JsonInclude(Include.NON_EMPTY)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public abstract class dtoBaseModel {
+public abstract class BaseModel {
 
   @JsonProperty("id")
   private String id;

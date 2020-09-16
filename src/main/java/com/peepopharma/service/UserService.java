@@ -1,19 +1,20 @@
 package com.peepopharma.service;
 
-import com.peepopharma.dto.User;
+import com.peepopharma.dto.UserDto;
+import com.peepopharma.exception.EntityNotFoundException;
 import java.util.List;
 
 public interface UserService {
 
-  User createUser(User user);
+  UserDto createUser(UserDto userDto);
 
-  void deleteUser(String id);
+  void deleteUser(String id) throws EntityNotFoundException;
 
-  List<User> listUser(String fields, Integer offset, Integer limit);
+  List<UserDto> listUser(String fields, Integer offset, Integer limit);
 
-  User updateUser(String id, UserUpdate user);
+  UserDto updateUser(String id, UserDto userDto);
 
-  List<User> listUser(String id, String fields);
+  List<UserDto> listUser(String id, String fields);
 
 
 

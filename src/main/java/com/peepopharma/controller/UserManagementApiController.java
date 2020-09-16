@@ -1,6 +1,7 @@
 package com.peepopharma.controller;
 
-import com.peepopharma.dto.User;
+import com.peepopharma.dto.UserDto;
+import com.peepopharma.exception.EntityNotFoundException;
 import com.peepopharma.exception.InvalidRequestParametersException;
 import com.peepopharma.service.UserApiService;
 import com.peepopharma.service.UserService;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserManagementApiController implements UserManagementApi {
 
   private final UserService userService;
-  private final Validator<User> userValidator;
+  private final Validator<UserDto> userValidator;
 
   public UserManagementApiController(UserApiService userService,
       UserValidator userValidator) {
@@ -29,33 +30,34 @@ public class UserManagementApiController implements UserManagementApi {
   }
 
   @Override
-  public ResponseEntity<User> createUser(@Valid User userDto)
+  public ResponseEntity<UserDto> createUser(@Valid UserDto userDto)
       throws InvalidRequestParametersException {
     userValidator.validate(userDto);
-    User user = userService.createUser(userDto);
+    UserDto user = userService.createUser(userDto);
     log.info("User added: {}", user);
     return new ResponseEntity<>(user, HttpStatus.OK);
   }
 
   @Override
-  public ResponseEntity<Void> deleteUser(String id) {
-    return null;
+  public ResponseEntity<Void> deleteUser(String id) throws EntityNotFoundException {
+    userService.deleteUser(id);
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 
   @Override
-  public ResponseEntity<List<User>> listUser(@Valid String fields, @Valid Integer offset,
+  public ResponseEntity<List<UserDto>> listUser(@Valid String fields, @Valid Integer offset,
       @Valid Integer limit) {
     return null;
   }
 
   @Override
-  public ResponseEntity<User> patchUser(String id, @Valid User user) {
+  public ResponseEntity<UserDto> patchUser(String id, @Valid UserDto userDto) {
     //validate request body
     return null;
   }
 
   @Override
-  public ResponseEntity<User> listUser(String id, @Valid String fields) {
+  public ResponseEntity<UserDto> listUser(String id, @Valid String fields) {
     return null;
   }
 }

@@ -1,5 +1,6 @@
 package com.peepopharma.controller;
 
+import com.peepopharma.exception.EntityNotFoundException;
 import com.peepopharma.exception.InvalidRequestParametersException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -21,6 +22,15 @@ public class PharmaResponseEntityExceptionHandler extends ResponseEntityExceptio
         e.getLocalizedMessage(), e.getCause(), e.getStackTrace());
 
     return handleExceptionInternal(e, null, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+  }
+
+  @ExceptionHandler(value = EntityNotFoundException.class)
+  protected ResponseEntity<Object> handleEntityNotFoundException(Exception e, WebRequest request){
+    log.error(
+        "Executed handleEntityNotFoundException. Entity not found. Further information: {} | Caused by: {} | Stack Trace: {}",
+        e.getLocalizedMessage(), e.getCause(), e.getStackTrace());
+
+    return handleExceptionInternal(e, null, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
   }
 
 

@@ -1,4 +1,4 @@
-package com.peepopharma.model;
+package com.peepopharma.persistence.model;
 
 import lombok.Getter;
 

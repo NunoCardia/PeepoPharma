@@ -8,11 +8,9 @@ import com.peepopharma.service.UserApiService;
 import com.peepopharma.service.UserService;
 import com.peepopharma.validator.UserValidator;
 import com.peepopharma.validator.Validator;
-import java.util.List;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +36,7 @@ public class UserManagementApiController implements UserManagementApi {
     userValidator.validate(userDto);
     UserDto user = userService.createUser(userDto);
     log.info("User added: {}", user);
-    return new ResponseEntity<>(user, HttpStatus.OK);
+    return new ResponseEntity<>(user, HttpStatus.CREATED);
   }
 
   @Override
@@ -48,21 +46,21 @@ public class UserManagementApiController implements UserManagementApi {
   }
 
   @Override
-  public ResponseEntity<Page<User>> listUser(@Valid Integer offset, @Valid Integer limit) {
-    Page<User> users = userService.listUser(offset, limit);
+  public ResponseEntity<Page<UserDto>> listUser(@Valid Integer offset, @Valid Integer limit) {
+    Page<UserDto> users = userService.listUser(offset, limit);
     return new ResponseEntity<>(users, HttpStatus.OK);
   }
 
   @Override
   public ResponseEntity<UserDto> patchUser(String id, @Valid UserDto userDto)
-      throws InvalidRequestParametersException {
+      throws InvalidRequestParametersException, EntityNotFoundException {
     userValidator.validate(userDto);
     UserDto updateUser = userService.updateUser(id, userDto);
     return new ResponseEntity<>(updateUser, HttpStatus.OK);
   }
 
   @Override
-  public ResponseEntity<UserDto> listUser(String id) {
+  public ResponseEntity<UserDto> listUser(String id) throws EntityNotFoundException {
     UserDto user = userService.listUser(id);
     return new ResponseEntity<>(user, HttpStatus.OK);
   }

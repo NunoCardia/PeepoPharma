@@ -18,7 +18,7 @@ public class MedicationValidator implements Validator<MedicationDto> {
   @Override
   public void validate(MedicationDto model) throws InvalidRequestParametersException {
     if (!validateMedicationNumber(model.getMedicationNumber()) || !validatePrice(model.getPrice())
-        || !validateQuantity(model.getQuantity())){
+        || !validateQuantity(model.getQuantity())) {
       throw new InvalidRequestParametersException(ErrorMessage.INVALID_REQUEST_PARAMS);
     }
   }

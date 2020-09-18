@@ -17,7 +17,7 @@ public interface SaleMapper {
   @Mapping(target = "name", expression = "java(user)")
   User fromUser(String user);
 
-  default String fromUser(User user){
+  default String fromUser(User user) {
     return user.getName();
   }
 }

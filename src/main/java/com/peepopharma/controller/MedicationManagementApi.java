@@ -1,6 +1,9 @@
 package com.peepopharma.controller;
 
+import com.peepopharma.dto.Error;
 import com.peepopharma.dto.MedicationDto;
+import com.peepopharma.exception.EntityNotFoundException;
+import com.peepopharma.exception.InvalidRequestParametersException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -8,6 +11,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.util.List;
 import javax.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,7 +37,7 @@ public interface MedicationManagementApi {
       "application/json"})
   ResponseEntity<MedicationDto> createMedication(
       @ApiParam(value = "The Medication to be created", required = true) @Valid @RequestBody
-          MedicationDto medicationDto);
+          MedicationDto medicationDto) throws InvalidRequestParametersException;
 
   @ApiOperation(value = "Deletes a Medication", nickname = "deleteMedication",
       notes = "This operation deletes a Medication entity")
@@ -45,7 +49,8 @@ public interface MedicationManagementApi {
   })
   @DeleteMapping(value = "/medication/{id}", produces = {"application/json"})
   ResponseEntity<Void> deleteMedication(
-      @ApiParam(value = "The identifier of the Medication", required = true) @PathVariable("id") String id);
+      @ApiParam(value = "The identifier of the Medication", required = true) @PathVariable("id") String id)
+      throws EntityNotFoundException;
 
   @ApiOperation(value = "List or find Medication objects", nickname = "listMedication",
       notes = "This operation lists or finds Medication entities", response = MedicationDto.class,
@@ -57,7 +62,7 @@ public interface MedicationManagementApi {
       @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)
   })
   @GetMapping(value = "/medication", produces = {"application/json"})
-  ResponseEntity<List<MedicationDto>> listMedication(
+  ResponseEntity<Page<MedicationDto>> listMedication(
       @ApiParam(value = "Requested index for start of resources to be provided in response") @Valid @RequestParam(value = "offset", required = false) Integer offset,
       @ApiParam(value = "Requested number of resources to be provided in response") @Valid @RequestParam(value = "limit", required = false) Integer limit);
 
@@ -73,7 +78,8 @@ public interface MedicationManagementApi {
       "application/json"})
   ResponseEntity<MedicationDto> patchMedication(
       @ApiParam(value = "Identifier of the Medication", required = true) @PathVariable("id") String id,
-      @ApiParam(value = "The Medication to be updated", required = true) @Valid @RequestBody MedicationDto MedicationDto);
+      @ApiParam(value = "The Medication to be updated", required = true) @Valid @RequestBody MedicationDto medicationDto)
+      throws InvalidRequestParametersException, EntityNotFoundException;
 
 
   @ApiOperation(value = "Retrieves a Medication by ID", nickname = "retrieveMedication",
@@ -86,6 +92,7 @@ public interface MedicationManagementApi {
   })
   @GetMapping(value = "/medication/{id}", produces = {"application/json"})
   ResponseEntity<MedicationDto> listMedication(
-      @ApiParam(value = "Identifier of the Medication", required = true) @PathVariable("id") String id);
+      @ApiParam(value = "Identifier of the Medication", required = true) @PathVariable("id") String id)
+      throws EntityNotFoundException;
 
 }

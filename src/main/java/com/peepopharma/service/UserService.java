@@ -11,7 +11,7 @@ public interface UserService {
 
   void deleteUser(String id) throws EntityNotFoundException;
 
-  Page<User> listUser(Integer offset, Integer limit);
+  Page<UserDto> listUser(Integer offset, Integer limit);
 
   UserDto updateUser(String id, UserDto userDto) throws EntityNotFoundException;
 

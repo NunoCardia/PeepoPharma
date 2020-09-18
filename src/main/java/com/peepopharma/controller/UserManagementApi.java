@@ -1,5 +1,6 @@
 package com.peepopharma.controller;
 
+import com.peepopharma.dto.Error;
 import com.peepopharma.dto.UserDto;
 import com.peepopharma.exception.EntityNotFoundException;
 import com.peepopharma.exception.InvalidRequestParametersException;
@@ -9,7 +10,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import java.util.List;
 import javax.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -63,7 +63,7 @@ public interface UserManagementApi {
       @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)
   })
   @GetMapping(value = "/user", produces = {"application/json"})
-  ResponseEntity<Page<User>> listUser(
+  ResponseEntity<Page<UserDto>> listUser(
       @ApiParam(value = "Requested index for start of resources to be provided in response") @Valid @RequestParam(value = "offset", required = false) Integer offset,
       @ApiParam(value = "Requested number of resources to be provided in response") @Valid @RequestParam(value = "limit", required = false) Integer limit);
 
@@ -80,7 +80,7 @@ public interface UserManagementApi {
   ResponseEntity<UserDto> patchUser(
       @ApiParam(value = "Identifier of the User", required = true) @PathVariable("id") String id,
       @ApiParam(value = "The User to be updated", required = true) @Valid @RequestBody UserDto userDto)
-      throws InvalidRequestParametersException;
+      throws InvalidRequestParametersException, EntityNotFoundException;
 
 
   @ApiOperation(value = "Retrieves an User by ID", nickname = "retrieveUser",
@@ -93,6 +93,7 @@ public interface UserManagementApi {
   })
   @GetMapping(value = "/user/{id}", produces = {"application/json"})
   ResponseEntity<UserDto> listUser(
-      @ApiParam(value = "Identifier of the User", required = true) @PathVariable("id") String id);
+      @ApiParam(value = "Identifier of the User", required = true) @PathVariable("id") String id)
+      throws EntityNotFoundException;
 
 }

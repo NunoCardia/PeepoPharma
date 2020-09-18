@@ -1,5 +1,6 @@
 package com.peepopharma.controller;
 
+import com.peepopharma.dto.Error;
 import com.peepopharma.dto.SaleDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Validated
 @Api(value = "Sale", tags = "the Sale API")
 public interface SaleManagementApi {
+
   @ApiOperation(value = "Creates a Sale", nickname = "createSale",
       notes = "This operation creates a Sale entity", response = SaleDto.class)
   @ApiResponses(value = {

@@ -7,14 +7,15 @@ import java.util.regex.Pattern;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PrescriptionValidator implements Validator<PrescriptionDto>{
+public class PrescriptionValidator implements Validator<PrescriptionDto> {
 
   private static final String PRESCRIPTION_NUMBER_REGEX_EXP = "[A-Z0-9-_]+";
   private static final String QUANTITY_REGEX_EXP = "[0-9]+";
+
   @Override
   public void validate(PrescriptionDto model) throws InvalidRequestParametersException {
     if (!validatePrescriptionNumber(model.getPrescriptionNumber()) ||
-        !validateQuantity(model.getQuantity())){
+        !validateQuantity(model.getQuantity())) {
       throw new InvalidRequestParametersException(ErrorMessage.INVALID_REQUEST_PARAMS);
     }
   }

@@ -9,6 +9,7 @@ import com.peepopharma.persistence.repository.UserRepository;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -46,8 +47,11 @@ public class UserApiService implements UserService {
   }
 
   @Override
-  public Page<User> listUser(Integer offset, Integer limit) {
-    return userRepository.findAll(PageRequest.of(offset, limit));
+  public Page<UserDto> listUser(Integer offset, Integer limit) {
+    PageRequest request = PageRequest.of(offset, limit);
+    Page<User> users = userRepository.findAll(request);
+    return new PageImpl<>(userMapper.fromUserModelList(users.getContent()), request,
+        users.getTotalElements());
 
   }
 

@@ -1,8 +1,8 @@
 package com.peepopharma.exception;
 
-public class PharmaException extends Exception{
+public class PharmaException extends Exception {
 
-  public PharmaException(String message){
+  public PharmaException(String message) {
     super(message);
   }
 }

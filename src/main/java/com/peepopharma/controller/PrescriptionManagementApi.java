@@ -1,5 +1,6 @@
 package com.peepopharma.controller;
 
+import com.peepopharma.dto.Error;
 import com.peepopharma.dto.PrescriptionDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

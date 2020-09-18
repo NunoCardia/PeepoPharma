@@ -25,7 +25,7 @@ public class PharmaResponseEntityExceptionHandler extends ResponseEntityExceptio
   }
 
   @ExceptionHandler(value = EntityNotFoundException.class)
-  protected ResponseEntity<Object> handleEntityNotFoundException(Exception e, WebRequest request){
+  protected ResponseEntity<Object> handleEntityNotFoundException(Exception e, WebRequest request) {
     log.error(
         "Executed handleEntityNotFoundException. Entity not found. Further information: {} | Caused by: {} | Stack Trace: {}",
         e.getLocalizedMessage(), e.getCause(), e.getStackTrace());

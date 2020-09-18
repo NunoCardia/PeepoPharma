@@ -18,7 +18,7 @@ public class UserValidator implements Validator<UserDto> {
   @Override
   public void validate(UserDto model) throws InvalidRequestParametersException {
     if (!validateEmail(model.getEmail()) || !validateRole(model.getRole()) ||
-        !validatePhoneNumber(model.getPhoneNumber())){
+        !validatePhoneNumber(model.getPhoneNumber())) {
       throw new InvalidRequestParametersException(ErrorMessage.INVALID_REQUEST_PARAMS);
     }
   }

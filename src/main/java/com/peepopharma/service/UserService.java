@@ -2,7 +2,8 @@ package com.peepopharma.service;
 
 import com.peepopharma.dto.UserDto;
 import com.peepopharma.exception.EntityNotFoundException;
-import java.util.List;
+import com.peepopharma.persistence.model.User;
+import org.springframework.data.domain.Page;
 
 public interface UserService {
 
@@ -10,12 +11,11 @@ public interface UserService {
 
   void deleteUser(String id) throws EntityNotFoundException;
 
-  List<UserDto> listUser(String fields, Integer offset, Integer limit);
+  Page<User> listUser(Integer offset, Integer limit);
 
-  UserDto updateUser(String id, UserDto userDto);
+  UserDto updateUser(String id, UserDto userDto) throws EntityNotFoundException;
 
-  List<UserDto> listUser(String id, String fields);
-
+  UserDto listUser(String id) throws EntityNotFoundException;
 
 
 }

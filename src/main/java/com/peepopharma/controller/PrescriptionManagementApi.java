@@ -26,7 +26,6 @@ public interface PrescriptionManagementApi {
   @ApiResponses(value = {
       @ApiResponse(code = 201, message = "Created", response = PrescriptionDto.class),
       @ApiResponse(code = 400, message = "Bad Request", response = Error.class),
-      @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
       @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)
   })
   @PostMapping(value = "/prescription", produces = {"application/json"}, consumes = {
@@ -40,8 +39,6 @@ public interface PrescriptionManagementApi {
   @ApiResponses(value = {
       @ApiResponse(code = 204, message = "Deleted"),
       @ApiResponse(code = 400, message = "Bad Request", response = Error.class),
-      @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
-      @ApiResponse(code = 403, message = "Forbidden", response = Error.class),
       @ApiResponse(code = 404, message = "Not Found", response = Error.class),
       @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)
   })
@@ -55,14 +52,11 @@ public interface PrescriptionManagementApi {
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "Success", response = PrescriptionDto.class, responseContainer = "List"),
       @ApiResponse(code = 400, message = "Bad Request", response = Error.class),
-      @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
-      @ApiResponse(code = 403, message = "Forbidden", response = Error.class),
       @ApiResponse(code = 404, message = "Not Found", response = Error.class),
       @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)
   })
   @GetMapping(value = "/prescription", produces = {"application/json"})
   ResponseEntity<List<PrescriptionDto>> listPrescription(
-      @ApiParam(value = "Comma-separated properties to be provided in response") @Valid @RequestParam(value = "fields", required = false) String fields,
       @ApiParam(value = "Requested index for start of resources to be provided in response") @Valid @RequestParam(value = "offset", required = false) Integer offset,
       @ApiParam(value = "Requested number of resources to be provided in response") @Valid @RequestParam(value = "limit", required = false) Integer limit);
 
@@ -71,13 +65,10 @@ public interface PrescriptionManagementApi {
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "Success", response = PrescriptionDto.class),
       @ApiResponse(code = 400, message = "Bad Request", response = Error.class),
-      @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
-      @ApiResponse(code = 403, message = "Forbidden", response = Error.class),
       @ApiResponse(code = 404, message = "Not Found", response = Error.class),
       @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)
   })
   @GetMapping(value = "/prescription/{id}", produces = {"application/json"})
   ResponseEntity<PrescriptionDto> listPrescription(
-      @ApiParam(value = "Identifier of the Prescription", required = true) @PathVariable("id") String id,
-      @ApiParam(value = "Comma-separated properties to provide in response") @Valid @RequestParam(value = "fields", required = false) String fields);
+      @ApiParam(value = "Identifier of the Prescription", required = true) @PathVariable("id") String id);
 }

@@ -3,6 +3,7 @@ package com.peepopharma.controller;
 import com.peepopharma.dto.UserDto;
 import com.peepopharma.exception.EntityNotFoundException;
 import com.peepopharma.exception.InvalidRequestParametersException;
+import com.peepopharma.persistence.model.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -10,6 +11,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.util.List;
 import javax.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -43,8 +45,6 @@ public interface UserManagementApi {
   @ApiResponses(value = {
       @ApiResponse(code = 204, message = "Deleted"),
       @ApiResponse(code = 400, message = "Bad Request", response = Error.class),
-      @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
-      @ApiResponse(code = 403, message = "Forbidden", response = Error.class),
       @ApiResponse(code = 404, message = "Not Found", response = Error.class),
       @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)
   })
@@ -59,14 +59,11 @@ public interface UserManagementApi {
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "Success", response = UserDto.class, responseContainer = "List"),
       @ApiResponse(code = 400, message = "Bad Request", response = Error.class),
-      @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
-      @ApiResponse(code = 403, message = "Forbidden", response = Error.class),
       @ApiResponse(code = 404, message = "Not Found", response = Error.class),
       @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)
   })
   @GetMapping(value = "/user", produces = {"application/json"})
-  ResponseEntity<List<UserDto>> listUser(
-      @ApiParam(value = "Comma-separated properties to be provided in response") @Valid @RequestParam(value = "fields", required = false) String fields,
+  ResponseEntity<Page<User>> listUser(
       @ApiParam(value = "Requested index for start of resources to be provided in response") @Valid @RequestParam(value = "offset", required = false) Integer offset,
       @ApiParam(value = "Requested number of resources to be provided in response") @Valid @RequestParam(value = "limit", required = false) Integer limit);
 
@@ -75,8 +72,6 @@ public interface UserManagementApi {
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "Updated", response = UserDto.class),
       @ApiResponse(code = 400, message = "Bad Request", response = Error.class),
-      @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
-      @ApiResponse(code = 403, message = "Forbidden", response = Error.class),
       @ApiResponse(code = 404, message = "Not Found", response = Error.class),
       @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)
   })
@@ -84,7 +79,8 @@ public interface UserManagementApi {
       "application/json"})
   ResponseEntity<UserDto> patchUser(
       @ApiParam(value = "Identifier of the User", required = true) @PathVariable("id") String id,
-      @ApiParam(value = "The User to be updated", required = true) @Valid @RequestBody UserDto userDto);
+      @ApiParam(value = "The User to be updated", required = true) @Valid @RequestBody UserDto userDto)
+      throws InvalidRequestParametersException;
 
 
   @ApiOperation(value = "Retrieves an User by ID", nickname = "retrieveUser",
@@ -92,14 +88,11 @@ public interface UserManagementApi {
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "Success", response = UserDto.class),
       @ApiResponse(code = 400, message = "Bad Request", response = Error.class),
-      @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
-      @ApiResponse(code = 403, message = "Forbidden", response = Error.class),
       @ApiResponse(code = 404, message = "Not Found", response = Error.class),
       @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)
   })
   @GetMapping(value = "/user/{id}", produces = {"application/json"})
   ResponseEntity<UserDto> listUser(
-      @ApiParam(value = "Identifier of the User", required = true) @PathVariable("id") String id,
-      @ApiParam(value = "Comma-separated properties to provide in response") @Valid @RequestParam(value = "fields", required = false) String fields);
+      @ApiParam(value = "Identifier of the User", required = true) @PathVariable("id") String id);
 
 }

@@ -3,6 +3,7 @@ package com.peepopharma.controller;
 import com.peepopharma.dto.UserDto;
 import com.peepopharma.exception.EntityNotFoundException;
 import com.peepopharma.exception.InvalidRequestParametersException;
+import com.peepopharma.persistence.model.User;
 import com.peepopharma.service.UserApiService;
 import com.peepopharma.service.UserService;
 import com.peepopharma.validator.UserValidator;
@@ -10,6 +11,8 @@ import com.peepopharma.validator.Validator;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,23 +44,26 @@ public class UserManagementApiController implements UserManagementApi {
   @Override
   public ResponseEntity<Void> deleteUser(String id) throws EntityNotFoundException {
     userService.deleteUser(id);
-    return new ResponseEntity<>(HttpStatus.OK);
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 
   @Override
-  public ResponseEntity<List<UserDto>> listUser(@Valid String fields, @Valid Integer offset,
-      @Valid Integer limit) {
-    return null;
+  public ResponseEntity<Page<User>> listUser(@Valid Integer offset, @Valid Integer limit) {
+    Page<User> users = userService.listUser(offset, limit);
+    return new ResponseEntity<>(users, HttpStatus.OK);
   }
 
   @Override
-  public ResponseEntity<UserDto> patchUser(String id, @Valid UserDto userDto) {
-    //validate request body
-    return null;
+  public ResponseEntity<UserDto> patchUser(String id, @Valid UserDto userDto)
+      throws InvalidRequestParametersException {
+    userValidator.validate(userDto);
+    UserDto updateUser = userService.updateUser(id, userDto);
+    return new ResponseEntity<>(updateUser, HttpStatus.OK);
   }
 
   @Override
-  public ResponseEntity<UserDto> listUser(String id, @Valid String fields) {
-    return null;
+  public ResponseEntity<UserDto> listUser(String id) {
+    UserDto user = userService.listUser(id);
+    return new ResponseEntity<>(user, HttpStatus.OK);
   }
 }

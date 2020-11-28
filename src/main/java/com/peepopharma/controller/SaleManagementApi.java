@@ -34,7 +34,7 @@ public interface SaleManagementApi {
         "application/json"})
     ResponseEntity<SaleDto> createSale(
         @ApiParam(value = "The Sale to be created", required = true) @Valid @RequestBody
-            SaleDto SaleDto);
+            SaleDto saleDto);
 
     @ApiOperation(value = "Deletes a Sale", nickname = "deleteSale",
         notes = "This operation deletes a Sale entity")

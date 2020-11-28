@@ -34,7 +34,7 @@ public interface PrescriptionManagementApi {
         "application/json"})
     ResponseEntity<PrescriptionDto> createPrescription(
         @ApiParam(value = "The Prescription to be created", required = true) @Valid @RequestBody
-            PrescriptionDto PrescriptionDto);
+            PrescriptionDto prescriptionDto);
 
     @ApiOperation(value = "Deletes a Prescription", nickname = "deletePrescription",
         notes = "This operation deletes a Prescription entity")

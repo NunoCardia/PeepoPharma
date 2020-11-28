@@ -34,7 +34,7 @@ public interface StockPurchaseApi {
         "application/json"})
     ResponseEntity<StockPurchaseDto> createStockPurchase(
         @ApiParam(value = "The StockPurchase to be created", required = true) @Valid @RequestBody
-            StockPurchaseDto StockPurchaseDto);
+            StockPurchaseDto stockPurchaseDto);
 
     @ApiOperation(value = "Deletes a StockPurchase", nickname = "deleteStockPurchase",
         notes = "This operation deletes a StockPurchase entity")

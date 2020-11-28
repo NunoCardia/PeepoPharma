@@ -76,8 +76,7 @@ public interface UserManagementApi {
       @ApiResponse(code = 404, message = "Not Found", response = Error.class),
       @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)
   })
-  @PatchMapping(value = "/user/{id}", consumes = {"application/json"}, produces = {
-      "application/json"})
+  @PatchMapping(value = "/user/{id}", consumes = {"application/json"}, produces = {"application/json"})
   ResponseEntity<UserDto> patchUser(
       @ApiParam(value = "Identifier of the User", required = true) @PathVariable("id") String id,
       @ApiParam(value = "The User to be updated", required = true) @Valid @RequestBody UserDto userDto)

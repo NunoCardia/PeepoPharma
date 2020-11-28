@@ -1,5 +1,6 @@
 package com.peepopharma.controller;
 
+import com.peepopharma.dto.Error;
 import com.peepopharma.exception.EntityNotFoundException;
 import com.peepopharma.exception.InvalidRequestParametersException;
 import lombok.extern.slf4j.Slf4j;
@@ -18,40 +19,53 @@ import javax.validation.ConstraintViolationException;
 @Slf4j
 public class PharmaResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
-  @ExceptionHandler(value = InvalidRequestParametersException.class)
-  protected ResponseEntity<Object> handleInvalidRequestParameters(Exception e, WebRequest request) {
-    log.error(
-        "Executed handleInvalidRequestParameters. Invalid request parameters. Further information: {} | Caused by: {} | Stack Trace: {}",
-        e.getLocalizedMessage(), e.getCause(), e.getStackTrace());
+    @ExceptionHandler(value = InvalidRequestParametersException.class)
+    protected ResponseEntity<Object> handleInvalidRequestParameters(Exception e, WebRequest request) {
+        log.error(
+            "Executed handleInvalidRequestParameters. Invalid request parameters. Further information: {} | Caused by: {} | Stack Trace: {}",
+            e.getLocalizedMessage(), e.getCause(), e.getStackTrace());
+      Error error = Error.builder()
+                         .message("Invalid request parameters")
+                         .build();
 
-    return handleExceptionInternal(e, null, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
-  }
+        return handleExceptionInternal(e, error, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
 
-  @ExceptionHandler(value = EntityNotFoundException.class)
-  protected ResponseEntity<Object> handleEntityNotFoundException(Exception e, WebRequest request) {
-    log.error(
-        "Executed handleEntityNotFoundException. Entity not found. Further information: {} | Caused by: {} | Stack Trace: {}",
-        e.getLocalizedMessage(), e.getCause(), e.getStackTrace());
+    @ExceptionHandler(value = EntityNotFoundException.class)
+    protected ResponseEntity<Object> handleEntityNotFoundException(Exception e, WebRequest request) {
+        log.error(
+            "Executed handleEntityNotFoundException. Entity not found. Further information: {} | Caused by: {} | Stack Trace: {}",
+            e.getLocalizedMessage(), e.getCause(), e.getStackTrace());
+        Error error = Error.builder()
+                           .message("Entity not found")
+                           .build();
 
-    return handleExceptionInternal(e, null, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
-  }
+        return handleExceptionInternal(e, error, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
 
-  @ExceptionHandler(value = ConstraintViolationException.class)
-  protected ResponseEntity<Object> handleConstraintViolationException(Exception e, WebRequest request) {
-    log.error(
-        "Executed handleConstraintViolationException. Model constraint violation. Further information: {} | Caused by: {} | Stack Trace: {}",
-        e.getLocalizedMessage(), e.getCause(), e.getStackTrace());
+    @ExceptionHandler(value = ConstraintViolationException.class)
+    protected ResponseEntity<Object> handleConstraintViolationException(Exception e, WebRequest request) {
+        log.error(
+            "Executed handleConstraintViolationException. Model constraint violation. Further information: {} | Caused by: {} | Stack Trace: {}",
+            e.getLocalizedMessage(), e.getCause(), e.getStackTrace());
+        Error error = Error.builder()
+                           .message("Model constraint violation")
+                           .build();
 
-    return handleExceptionInternal(e, null, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
-  }
+        return handleExceptionInternal(e, error, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
 
-  @ExceptionHandler(value = DataIntegrityViolationException.class)
-  protected ResponseEntity<Object> handleDataIntegrityViolationException(Exception e, WebRequest request) {
-    log.error(
-        "Executed handleDataIntegrityViolationException. Model constraint violation. Further information: {} | Caused by: {} | Stack Trace: {}",
-        e.getLocalizedMessage(), e.getCause(), e.getStackTrace());
+    @ExceptionHandler(value = DataIntegrityViolationException.class)
+    protected ResponseEntity<Object> handleDataIntegrityViolationException(Exception e, WebRequest request) {
+        log.error(
+            "Executed handleDataIntegrityViolationException. Model constraint violation. Further information: {} | Caused by: {} | Stack Trace: {}",
+            e.getLocalizedMessage(), e.getCause(), e.getStackTrace());
 
-    return handleExceptionInternal(e, null, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
-  }
+        Error error = Error.builder()
+                           .message("Model constraint violation")
+                           .build();
+
+        return handleExceptionInternal(e, error, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
 
 }

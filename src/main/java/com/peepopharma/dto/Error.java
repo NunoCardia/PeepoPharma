@@ -12,9 +12,11 @@ import java.io.Serializable;
 @Builder(builderClassName = "ErrorBuilder", toBuilder = true)
 public class Error implements Serializable {
 
+    private String message;
+
     private String reason;
 
-    private String message;
+    private String errorCode;
 
 
     @JsonPOJOBuilder(withPrefix = "")

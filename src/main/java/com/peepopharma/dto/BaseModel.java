@@ -11,10 +11,10 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class BaseModel {
 
-  @JsonProperty("id")
-  private String id;
+    @JsonProperty("id")
+    private String id;
 
-  @JsonProperty("name")
-  private String name;
+    @JsonProperty("name")
+    private String name;
 
 }

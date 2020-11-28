@@ -6,15 +6,15 @@ import org.springframework.data.domain.Page;
 
 public interface MedicationService {
 
-  MedicationDto createMedication(MedicationDto medicationDto);
+    MedicationDto createMedication(MedicationDto medicationDto);
 
-  void deleteMedication(String id) throws EntityNotFoundException;
+    void deleteMedication(String id) throws EntityNotFoundException;
 
-  Page<MedicationDto> listMedication(Integer offset, Integer limit);
+    Page<MedicationDto> listMedication(Integer offset, Integer limit);
 
-  MedicationDto updateMedication(String id, MedicationDto MedicationDto)
-      throws EntityNotFoundException;
+    MedicationDto updateMedication(String id, MedicationDto medicationDto)
+        throws EntityNotFoundException;
 
-  MedicationDto listMedication(String id) throws EntityNotFoundException;
+    MedicationDto listMedication(String id) throws EntityNotFoundException;
 
 }

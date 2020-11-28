@@ -10,14 +10,14 @@ import org.mapstruct.Mapping;
 @Mapper(config = BaseMapperConfig.class)
 public interface SaleMapper {
 
-  SaleDto fromSaleModel(Sale sale);
+    SaleDto fromSaleModel(Sale sale);
 
-  Sale fromSaleDto(SaleDto saleDto);
+    Sale fromSaleDto(SaleDto saleDto);
 
-  @Mapping(target = "name", expression = "java(user)")
-  User fromUser(String user);
+    @Mapping(target = "name", expression = "java(user)")
+    User fromUser(String user);
 
-  default String fromUser(User user) {
-    return user.getName();
-  }
+    default String fromUser(User user) {
+        return user.getName();
+    }
 }

@@ -4,13 +4,11 @@ import com.peepopharma.dto.Error;
 import com.peepopharma.dto.UserDto;
 import com.peepopharma.exception.EntityNotFoundException;
 import com.peepopharma.exception.InvalidRequestParametersException;
-import com.peepopharma.persistence.model.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import javax.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -22,10 +20,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.validation.Valid;
+
 @Validated
 @Api(value = "User", tags = "the User API")
 public interface UserManagementApi {
-
 
   @ApiOperation(value = "Creates an User", nickname = "createUser",
       notes = "This operation creates an User entity", response = UserDto.class)
@@ -64,8 +63,10 @@ public interface UserManagementApi {
   })
   @GetMapping(value = "/user", produces = {"application/json"})
   ResponseEntity<Page<UserDto>> listUser(
-      @ApiParam(value = "Requested index for start of resources to be provided in response") @Valid @RequestParam(value = "offset", required = false) Integer offset,
-      @ApiParam(value = "Requested number of resources to be provided in response") @Valid @RequestParam(value = "limit", required = false) Integer limit);
+      @ApiParam(value = "Requested index for start of resources to be provided in response") @Valid
+      @RequestParam(value = "offset", required = false) Integer offset,
+      @ApiParam(value = "Requested number of resources to be provided in response") @Valid @RequestParam(value = "limit", required = false)
+          Integer limit);
 
   @ApiOperation(value = "Updates partially an User", nickname = "patchUser",
       notes = "This operation updates partially an User entity", response = UserDto.class)
@@ -81,7 +82,6 @@ public interface UserManagementApi {
       @ApiParam(value = "Identifier of the User", required = true) @PathVariable("id") String id,
       @ApiParam(value = "The User to be updated", required = true) @Valid @RequestBody UserDto userDto)
       throws InvalidRequestParametersException, EntityNotFoundException;
-
 
   @ApiOperation(value = "Retrieves an User by ID", nickname = "retrieveUser",
       notes = "This operation retrieves an User entity. Attribute selection is enabled for all first level attributes", response = UserDto.class)

@@ -5,6 +5,6 @@ import com.peepopharma.exception.InvalidRequestParametersException;
 
 public interface Validator<T extends BaseModel> {
 
-  void validate(T model) throws InvalidRequestParametersException;
+    void validate(T model) throws InvalidRequestParametersException;
 
 }
